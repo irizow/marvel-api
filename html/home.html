@@ -9,11 +9,32 @@
     <script src="../js/utils/md5.min.js"></script>
 </head>
 <body>
-    <main>
-        <h1>UOC Marvel Library</h1>
-            <section id="home">
+    <header>
+        <nav>
+            <div>
+                <h3>UOC Marvel Library</h3>
+                <p>Programación Web</p>
+            </div>
+            <div>
+                <a>Comics</a>
+                <a>Favoritos(<span id="favorite-counter">0</span>)</a>
+                <a>Video</a>
+                <a id="user-name">usuario</a>
+            </div>
+        </nav>
+        <nav>
+            <h3>Heroes Populares</h3>
+            <div></div>
+
+        </nav>
+    </header>
+    <main id="home">
+            <section id="comics">
             </section>
+            <button id="prev">Anterior</button>
+            <button id="next">Siguiente</button>
     </main>
-    <script type="module" src="../js/home.js"></script>
+    <script type="module" src="../js/header.js"></script>
+    <script type="module" src="../js/comics.js"></script>
 </body>
 </html>

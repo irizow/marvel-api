@@ -7,13 +7,29 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Poppins', 'Gill Sans', 'Gill Sans MT';
 }
 
 
 body {
-    font-family: 'Poppins', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     text-align: center;
 }
+
+button {
+    border-radius: 5px;
+    border: none;
+    box-shadow: 1px 1px 3px rgba(128, 128, 128, 0.521);
+}
+
+button, a {
+    transition: scale 200ms ease-in-out;
+    cursor: pointer;
+}
+
+button:hover, a:hover {
+    scale: 1.05;
+}
+
 
 
 /*Login*/
@@ -50,7 +66,6 @@ body {
     height: 2rem;
     margin-top: 1rem;
     border-radius: 5px;
-    border: 1px solid black;
     display: grid;
     place-items: center;
     text-decoration: none;
@@ -73,15 +88,87 @@ body {
     grid-template-columns: 1fr 3fr;
 }
 
+/*HEADER*/
+nav:first-of-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(35, 35, 35);
+    color: white;
+    padding: 0.5rem;
+}
+
+
+nav:first-of-type>div:last-child {
+    display: flex;
+    gap: 1rem;
+}
+
+
+nav a:hover {
+    color: rgb(218, 170, 68);
+}
+
+
+
 /*HOME*/
+
+#home {
+    background-color: rgb(205, 205, 205);
+    padding: 2rem 5rem;
+}
 
 .comic-wrapper {
     display: grid;
-    width: 100vw;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
 }
 
+
 .comic-container {
-    border: 1px solid black;
+    background-color: rgb(243, 243, 243);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px grey;
+    transition: scale 300ms ease-in-out;
+}
+
+.comic-container:hover {
+    scale: 1.05;
+}
+
+.comic-container>img {
+    width: 80%;
+    height: 80%;
+}
+
+.comic-container .button-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comic-container .button-wrapper>a, .comic-container .button-wrapper>button {
+    padding: 1rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    background-color: grey;
+    font-size: 0.8rem;
+    color: white;
+    border-radius: 5px;
+}
+
+#home>button {
+    margin: 2rem 1rem;
+    padding: 0.5rem 1rem;
+}
+
+#home>button:last-of-type {
+    background-color: rgb(129, 210, 129);
 }

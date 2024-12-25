@@ -38,7 +38,7 @@ function validateForm(e) {
         return
     }
 
-    const user = new User(name, surname, username, password, email, address, community) //Si los datos están bien, crear un nuevo usuario
+    const user = new User(name, surname, username, password, email, address, community, []) //Si los datos están bien, crear un nuevo usuario
     let existingUsers = JSON.parse(localStorage.getItem('users')) || []; //Sacamos usuarios existentes, si los hay, si no, inicializamos una array vacía
     const duplicateUserName = existingUsers.some((user) => user.username === username); //Chequeamos si existe un usuario con el nombre de usuario introducido.
     const duplicateEmail = existingUsers.some((user) => user.email === email); //Chequeamos si existe un usuario con el email introducido
