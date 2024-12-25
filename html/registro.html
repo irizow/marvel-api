@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Practica de la UOC de programación web">
+    <title>Marvel Comics Registro</title>
+    <link href="../css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <main class="log-in">
+        <h1>UOC Marvel Library</h1>
+        <section>
+            <h3>Registro</h3>
+            <form id="register-form">
+                <div>
+                    <label for="name">*Nombre: </label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div>
+                    <label for="surname">*Apellido: </label>
+                    <input type="text" id="surname" name="surname">
+                </div>
+                <div>
+                    <label for="adress">Dirección: </label>
+                    <input type="text" id="address" name="adress">
+                </div>
+                <div>
+                    <label for="community">Comunidad: </label>
+                    <select id="community">
+                        <option value="Andalucía">Andalucía</option>
+                        <option value="Murcia">Aragón</option>
+                        <option value="Murcia">Asturias</option>
+                        <option value="Baleares">Baleares</option>
+                        <option value="Canarias">Canarias</option>
+                        <option value="Cantabria">Cantabria</option>
+                        <option value="Castilla y León">Castilla y León</option>
+                        <option value="Castilla la Mancha">Castilla la Mancha</option>
+                        <option value="Catalunya">Catalunya</option>
+                        <option value="Comunidad Valenciana">Comunidad Valenciana</option>
+                        <option value="Extremadura">Extremadura</option>
+                        <option value="Galicia">Galicia</option>
+                        <option value="Madrid">Madrid</option>
+                        <option value="País Vasco">País Vasco</option>
+                        <option value="Navarra">Navarra</option>
+                        <option value="La Rioja">La Rioja</option>
+                        <option value="Murcia">Murcia</option>
+                        
+                    </select>
+                </div>
+                <div>
+                    <label for="email">*Email: </label>
+                    <input type="email" id="email" name="email">
+                    </div>
+                <div>
+                    <label for="username">*Usuario</label>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div>
+                <label for="password">*Contraseña: </label>
+                <input type="password" id="password" name="password">
+                </div>
+                <button id="submit" type="submit">Registrate</button>
+            </form>
+        </section>
+    </main>
+    <script type="module" src="../js/registro.js"></script>
+</body>
+</html>
