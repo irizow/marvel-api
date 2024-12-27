@@ -1,7 +1,27 @@
 
 //importar fetchData de la carpeta utils
 import { fetchData } from "./utils/fetchData.js";
+import { Comic } from "./clases.js";
+import {loggedUserInstance} from "./utils/getLoggedUser.js";
+import { updateHeaderData } from "./header.js";
 const comics = await fetchData('comics'); //Hacer el fetch
+
+
+const comicsArr = []; //Creamos un empty array para guardar los objeto
+comics.data.results.forEach((comic) => { //Creamos una instancia de la clase comic por cada comic sacado de la API
+    const comicObj = new Comic(
+        comic.id,
+        comic.title,
+        comic.issueNumber,
+        comic.description,
+        comic.pageCount,
+        comic.thumbnail,
+        comic.prices[0],
+        comic.creators,
+        comic.characters
+    )
+    comicsArr.push(comicObj);
+})
 
 let initialIndex = 0; //Indice de donde empieza la paginación
 let comicsPerPage = 9; //Numero de comics que queremos por página
@@ -19,21 +39,25 @@ const handlePrev = ()=> { //Si el indice menos los comics que queremos renderiza
     renderComics();
 }
 
-const prevButton = document.getElementById('prev'); //Seleccionamos los botones del DOM
-const nextButton = document.getElementById('next');
+document.addEventListener('DOMContentLoaded', ()=> {
+    updateHeaderData();
+    const prevButton = document.getElementById('prev'); //Seleccionamos los botones del DOM
+    const nextButton = document.getElementById('next');
 
-prevButton.addEventListener('click', handlePrev);
-nextButton.addEventListener('click', handleNext);
+    prevButton.addEventListener('click', handlePrev);
+    nextButton.addEventListener('click', handleNext);
+
+})
+
 
 
 
 console.log(comics.data.results) //logeamos por visualización
 
-const loggedUser = localStorage.getItem('loggedUser'); //Sacamos el user que esta loggeado;
 
 const comicsPage = document.getElementById('comics'); //Seleccionamos el container del DOM
 
-if(loggedUser === '') { //Si no hay ningun usuario logeado lo anunciamos
+if(loggedUserInstance === '') { //Si no hay ningun usuario logeado lo anunciamos
     const p1 = document.createElement('p');
     p1.textContent = 'Lo siento, debes iniciar sesión para visualizar esta página'
     const p2 = document.createElement('p')
@@ -52,7 +76,7 @@ else { //Si hay un usuario logeado...
 
 function renderComics(){
     comicsPage.innerHTML = ''; //Vaciamos los comics
-    let comicsOnDisplay = comics.data.results.slice(initialIndex, initialIndex + comicsPerPage); //Sacamos el numero de comics indicados en la paginación
+    let comicsOnDisplay = comicsArr.slice(initialIndex, initialIndex + comicsPerPage); //Sacamos el numero de comics indicados en la paginación
     const comicWrapper = document.createElement('div'); //Creamos un container
     comicWrapper.classList.add('comic-wrapper');
 
@@ -64,7 +88,7 @@ function renderComics(){
         comicTitle.textContent = comic.title;
 
         const comicImg = document.createElement('img'); //Sacamos la imagen con el path y la extensión
-        comicImg.src = comic.thumbnail.path + '.' + comic.thumbnail.extension;
+        comicImg.src = comic.getThumbnailURL();
 
         const comicDescription = document.createElement('p'); //Si el comic tiene descripción la renderizamos, en caso opuesto indicamos que no hay descripción
         comicDescription.textContent = comic.description === '' ? 'No hay descripción disponible' : comic.description;
@@ -73,6 +97,13 @@ function renderComics(){
         buttonWrapper.classList.add('button-wrapper')
         const addToFavorites = document.createElement('button');
         addToFavorites.textContent = 'Añadir a Favoritos'
+
+        addToFavorites.addEventListener('click', ()=> {
+            console.log('userfavs', loggedUserInstance)
+            loggedUserInstance.favorites.addFavorite(comic);
+            updateHeaderData()
+        });
+
         const viewDetails = document.createElement('a');
         viewDetails.textContent = 'Ver Detalles'
 
@@ -86,6 +117,11 @@ function renderComics(){
         comicsPage.appendChild(comicWrapper);
     })
     }
+   
+
+    
+
+
 
 
 
