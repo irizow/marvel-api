@@ -12,10 +12,12 @@ export class Comic {
       this.characters = characters
     }
 
-    getThumbnailURL() {
+    getThumbnailURL() { //Metodo para facilitar el acceso al enlace del thumbnail
         return `${this.thumbnail.path}.${this.thumbnail.extension}`
     }
   }
+
+
 
 export class Favorites {
     constructor(...comics) {
@@ -23,54 +25,32 @@ export class Favorites {
     }
   
     addFavorite(comic) {
-      this.comics.push(comic)
-      localStorage.setItem('userFavorites', JSON.stringify(this.comics));
+        this.comics.push(comic); //Añadimos favoritos a la lista
+        this.saveFavorites(); //Guardamos en localStorage
     }
 
-    createNewInstance(favorites) {
-        const favoriteInstances = [];
-        if(favorites.length) {
-            favorites.forEach((favorite) => {
-            const favoriteInstance = new Comic(
-                favorite.id,
-                favorite.title,
-                favorite.issueNumber,
-                favorite.description,
-                favorite.pageCount,
-                favorite.thumbnail,
-                favorite.prices,
-                favorite.creators,
-                favorite.characters
-            )
-            favoriteInstances.push(favoriteInstance);
-        })
-        }
-        return favoriteInstances;
-
-    }
-
-    getFavorites() {
-        const favorites = JSON.parse(localStorage.getItem('userFavorites')) || [];
-        return this.createNewInstance(favorites);
-    }
   
     removeFavorite(comicId) {
-      const filteredComics = this.comics.filter((comic) => comic.id !== comicId);
-      this.comics.length = 0
-      this.comics.push(...filteredComics);
-      const newFavorites = this.createNewInstance(filteredComics);
-      localStorage.setItem('userFavorites', JSON.stringify(newFavorites));
+      const filteredComics = this.comics.filter((comic) => comic.id !== comicId); //Sacamos los comics que no coinciden con el id que queremos eliminar
+      this.comics.length = 0 //Vaciamos los favoritos
+      this.comics.push(...filteredComics); //Actualizamos haciendo push de los comics filtrados
+      this.saveFavorites(); //guardamos a localStorage
     }
   
     showFavorites() {
-      this.comics.forEach((comic) => console.log(comic.title));
+      this.comics.forEach((comic) => console.log(comic.title)); //Sacamos los titulos de los comics
     }
   
     addMultipleFavorites(...comics) {
-      this.comics.push(...comics)
+      this.comics.push(...comics); //Añadimos multiples comics con el spread operator
+      this.saveFavorites(); //Guardamos en localStorage
+    }
+
+    saveFavorites() {
+        localStorage.setItem('userFavorites', JSON.stringify(this.comics)) //Guardamos los comics que estan en nuestros favoritos al localStorage
     }
   
-    copyFavorites() {
+    copyFavorites() { //
       const copy = new Favorite(...this.comics)
       return copy;
     }
@@ -116,6 +96,14 @@ export class Favorites {
         this.address = address,
         this.community = community,
         this.favorites = favorites;
+    }
+
+    addFavorite(favorite) {
+        this.favorites.addFavorite(favorite)
+    }
+
+    addFavorites(...favorites) {
+        this.favorites = new Favorites(...favorites)
     }
 }
 

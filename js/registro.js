@@ -3,6 +3,15 @@ import { Favorites, User } from "./clases.js"; //Importar las clases usuario y f
 const registerForm = document.getElementById('register-form'); 
 registerForm.addEventListener('submit', validateForm);
 
+const emailInput = document.getElementById('email');
+emailInput.addEventListener('keyup', (e)=> {
+    if(e.key === '@') {
+        console.log('@ pressed')
+        let prevText = emailInput.value;
+        emailInput.value = prevText + 'uoc.edu'
+    }
+})
+
 function validateForm(e) {
     e.preventDefault(); //Evitar la submisión del formulario por defecto
 
@@ -11,11 +20,12 @@ function validateForm(e) {
     const address = document.getElementById('address').value;
     const community = document.getElementById('community').value;
     const email = document.getElementById('email').value;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const passwordRepeat = document.getElementById('password-repeat').value.trim();
 
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; //Regular expression del email
-    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{6,20}$/; //Regex de la contraseña (min 6 caracteres, max 20, letras y numeros)
+    const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/; //Regex de la contraseña (min 8 caracteres, max 20, min 1 letra, número y caracter especial)
 
     if(username === '') { //Si el usuario, nombre o email estan vacíos, parar la submisión del formulario
         alert('Tienes que elegir un nombre de usuario');
@@ -34,7 +44,11 @@ function validateForm(e) {
         return
     }
     if(!passwordPattern.test(password)) { 
-        alert('La contraseña debe tener entre 6 y 20 caracteres y contener letras y numeros');
+        alert('La contraseña debe tener entre 8 y 20 caracteres y contener letras, números y al menos un carácter especial');
+        return
+    }
+    if(password !== passwordRepeat) {
+        alert('Las contraseñas no coinciden!');
         return
     }
 
@@ -60,4 +74,8 @@ function validateForm(e) {
     alert('Usuario registrado con exito!'); //Alertamos de que todo está OK
     
     window.location.href = 'index.html' //Redirigimos al usuario para que haga el login
+}
+
+function getPoblacion(e) {
+
 }

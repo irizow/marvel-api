@@ -1,123 +1,48 @@
 
 //importar fetchData de la carpeta utils
 import { fetchData } from "./utils/fetchData.js";
-import { Comic } from "./clases.js";
-import {loggedUserInstance} from "./utils/getLoggedUser.js";
+import { comicsArr } from "./comicRenderer.js";
 import { updateHeaderData } from "./header.js";
-const comics = await fetchData('comics'); //Hacer el fetch
+import { handleNext, handlePrev } from "./pagination.js";
+import { createComics } from "./comicRenderer.js";
+
+updateHeaderData();
+if(!localStorage.getItem('loggedUser')) { //Si no hay ningun usuario logeado lo anunciamos
+    alert('Debes iniciar sesión para visualizar esta página');
+    window.location.href = 'index.html';
+}
+let comics = await fetchData('comics'); //Hacer el fetch inicial
 
 
-const comicsArr = []; //Creamos un empty array para guardar los objeto
-comics.data.results.forEach((comic) => { //Creamos una instancia de la clase comic por cada comic sacado de la API
-    const comicObj = new Comic(
-        comic.id,
-        comic.title,
-        comic.issueNumber,
-        comic.description,
-        comic.pageCount,
-        comic.thumbnail,
-        comic.prices[0],
-        comic.creators,
-        comic.characters
-    )
-    comicsArr.push(comicObj);
+
+const prevButton = document.getElementById('prev'); //Seleccionamos los botones del DOM
+const nextButton = document.getElementById('next');
+
+prevButton.addEventListener('click', () => handlePrev(comics.data.results.length));
+nextButton.addEventListener('click', () => handleNext());
+
+
+
+const heroeButtons = document.querySelectorAll('.heroe-button');
+
+heroeButtons.forEach((button) => {
+    button.addEventListener('click', fetchHeroeComics);
 })
 
-let initialIndex = 0; //Indice de donde empieza la paginación
-let comicsPerPage = 9; //Numero de comics que queremos por página
-
-const handleNext = ()=> { //Si el indice más los comics por página es más largo que los resultados, debería quedar igual
-                            //si no, sumamos los comics por página al indice inicial y volvemos a renderizar
-    initialIndex = initialIndex + comicsPerPage >= comics.data.results.length ? initialIndex : initialIndex + comicsPerPage;
-    renderComics();
-    console.log('initial', + initialIndex)
-}
-
-const handlePrev = ()=> { //Si el indice menos los comics que queremos renderizar es menor o igual a cero, ponemos el indice a 0
-                        //Si no, restamos el numero de comics por página al indice y renderizamos otra vez
-    initialIndex = initialIndex-comicsPerPage <= 0 ? 0 : initialIndex-comicsPerPage;
-    renderComics();
-}
-
-document.addEventListener('DOMContentLoaded', ()=> {
-    updateHeaderData();
-    const prevButton = document.getElementById('prev'); //Seleccionamos los botones del DOM
-    const nextButton = document.getElementById('next');
-
-    prevButton.addEventListener('click', handlePrev);
-    nextButton.addEventListener('click', handleNext);
-
-})
-
-
-
-
-console.log(comics.data.results) //logeamos por visualización
-
-
-const comicsPage = document.getElementById('comics'); //Seleccionamos el container del DOM
-
-if(loggedUserInstance === '') { //Si no hay ningun usuario logeado lo anunciamos
-    const p1 = document.createElement('p');
-    p1.textContent = 'Lo siento, debes iniciar sesión para visualizar esta página'
-    const p2 = document.createElement('p')
-    const link = document.createElement('a');
-    link.href = 'index.html'
-    link.textContent = 'Inicia Sesión';
-
-    comicsPage.appendChild(p1);
-    comicsPage.appendChild(p2);
-    p2.appendChild(link);
-}
-
-else { //Si hay un usuario logeado...
-        renderComics();
-}
-
-function renderComics(){
-    comicsPage.innerHTML = ''; //Vaciamos los comics
-    let comicsOnDisplay = comicsArr.slice(initialIndex, initialIndex + comicsPerPage); //Sacamos el numero de comics indicados en la paginación
-    const comicWrapper = document.createElement('div'); //Creamos un container
-    comicWrapper.classList.add('comic-wrapper');
-
-    comicsOnDisplay.forEach((comic) => { //Por cada uno de los comics que hemos sacado anteriormente...
-        const comicContainer = document.createElement('div'); //creamos un container para el comic
-        comicContainer.classList.add('comic-container');
-
-        const comicTitle = document.createElement('h3'); //h3 para el titulo
-        comicTitle.textContent = comic.title;
-
-        const comicImg = document.createElement('img'); //Sacamos la imagen con el path y la extensión
-        comicImg.src = comic.getThumbnailURL();
-
-        const comicDescription = document.createElement('p'); //Si el comic tiene descripción la renderizamos, en caso opuesto indicamos que no hay descripción
-        comicDescription.textContent = comic.description === '' ? 'No hay descripción disponible' : comic.description;
-
-        const buttonWrapper = document.createElement('div'); //Creamos los botones para añadir a favoritos y ver detalles
-        buttonWrapper.classList.add('button-wrapper')
-        const addToFavorites = document.createElement('button');
-        addToFavorites.textContent = 'Añadir a Favoritos'
-
-        addToFavorites.addEventListener('click', ()=> {
-            console.log('userfavs', loggedUserInstance)
-            loggedUserInstance.favorites.addFavorite(comic);
-            updateHeaderData()
-        });
-
-        const viewDetails = document.createElement('a');
-        viewDetails.textContent = 'Ver Detalles'
-
-        comicContainer.appendChild(comicTitle); //Hacemos append de todos los elementos creados
-        comicContainer.appendChild(comicImg);
-        comicContainer.appendChild(comicDescription);
-        buttonWrapper.appendChild(addToFavorites);
-        buttonWrapper.appendChild(viewDetails);
-        comicContainer.appendChild(buttonWrapper);
-        comicWrapper.appendChild(comicContainer);
-        comicsPage.appendChild(comicWrapper);
-    })
+async function fetchHeroeComics(e) {
+    if(e.target.textContent === 'Todos') {
+        comics = await fetchData('comics');
+    }
+    else {
+        console.log('fetching heroes')
+        comics = await fetchData(`characters/${e.target.id}/comics`);
+    }
+        createComics(comics.data.results, comicsArr);
     }
    
+
+createComics(comics.data.results);
+
 
     
 
