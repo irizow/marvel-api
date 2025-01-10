@@ -1,18 +1,16 @@
 const usernameElement = document.getElementById('user-name')
 const favoriteCounter = document.getElementById('favorite-counter')
-import { loggedUser } from '../js/utils/getLoggedUser.js';
 import {userName, logOut } from '../js/utils/getLoggedUser.js'
 
 
-window.addEventListener('load', updateHeaderData);
+window.addEventListener('load', updateHeaderData); //Actualizamos cabecera cada vez que carga
 
-export function updateHeaderData() {
-    const favoritesCount = JSON.parse(localStorage.getItem('userFavorites')).length
-    console.log('header user favorites', favoritesCount)
-    usernameElement.textContent = userName;
+export function updateHeaderData() { 
+    const favoritesCount = JSON.parse(localStorage.getItem('userFavorites')).length //Sacamos el numero de favoritos guardados
+    usernameElement.textContent = userName; //Sacamos el nombre de usuario de getLoggedUser
     favoriteCounter.textContent = favoritesCount;
 }
 
 const logOutBtn = document.getElementById('log-out');
 
-logOutBtn.addEventListener('click', logOut)
+logOutBtn.addEventListener('click', logOut) //Llamamos función logOut en click

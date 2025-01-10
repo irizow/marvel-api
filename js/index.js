@@ -1,3 +1,5 @@
+
+
 const logInForm = document.getElementById('log-in-form');
 logInForm.addEventListener('submit', validateLogIn);
 
@@ -8,7 +10,7 @@ if(localStorage.getItem('loggedUser')) {
 
 
 function validateLogIn(e) {
-    e.preventDefault();
+    e.preventDefault(); //Prevenimos submisión por defecto
     localStorage.setItem('loggedUser', '');
     const username = document.getElementById('username').value; //Sacamos el usuario y el password de el formulario
     const password = document.getElementById('password').value;

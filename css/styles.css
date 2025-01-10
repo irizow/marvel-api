@@ -278,6 +278,7 @@ nav a:last-of-type:hover + #log-out {
 
 .favorite-container>img {
     max-height: 400px;
+    max-width: 100%;
     border-radius: 5px;
 } 
 
@@ -339,6 +340,19 @@ nav a:last-of-type:hover + #log-out {
     color: white;
     padding: 0.4rem 0.8rem;
     border-radius: 5px;
+}
+
+#video {
+    padding: 1rem;
+    height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#video video {
+    width: min(700px, 95vw) ;
+    margin-top: 2rem;
 }
 
 

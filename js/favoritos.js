@@ -5,9 +5,9 @@ import { updateHeaderData } from "./header.js";
 const favoriteWrapper = document.querySelector('.favorite-wrapper'); //seleccionar container
 
 
-let userFavoritesData = JSON.parse(localStorage.getItem('userFavorites'));
-console.log('gooser favs', userFavoritesData)
-let userFavorites = new Favorites(...userFavoritesData.map((favorite) => {
+let userFavoritesData = JSON.parse(localStorage.getItem('userFavorites')); //Sacamos los favoritos de LS.
+
+let userFavorites = new Favorites(...userFavoritesData.map((favorite) => { //Creamos una instancia de los favoritos
     return new Comic(
         favorite.id,
         favorite.title,
@@ -20,7 +20,7 @@ let userFavorites = new Favorites(...userFavoritesData.map((favorite) => {
         favorite.characters,
     )
 }))
-console.log('gooser favorites 2', userFavorites)
+
 
 
 if(userFavorites.comics.length) { //Si hay favoritos...
@@ -40,18 +40,17 @@ if(userFavorites.comics.length) { //Si hay favoritos...
         const deleteFavoriteBtn = document.createElement('button');
         deleteFavoriteBtn.textContent = 'Eliminar de Favoritos';
 
-        console.log('favorite', favorite)
-        deleteFavoriteBtn.addEventListener('click', ()=> {
+        deleteFavoriteBtn.addEventListener('click', ()=> { //Llamos al metodo para eliminar favoritos al hacer click
             userFavorites.removeFavorite(favorite.id);
             favoriteContainer.remove();
             alert(`${favorite.title} eliminado de tus favoritos`);
-            updateHeaderData();
+            updateHeaderData(); //Actualizamos cabecera con nuevo num de favoritos.
         })
 
         const favoriteImg = document.createElement('img');
-        favoriteImg.src = favorite.getThumbnailURL();
+        favoriteImg.src = favorite.getThumbnailURL(); //Llamamos al metodo para conseguir el Thumbnail
 
-        infoWrapper.appendChild(favoriteTitle);
+        infoWrapper.appendChild(favoriteTitle); //Hacemos append de todos los elementos.
         infoWrapper.appendChild(favoriteDescription);
         infoWrapper.appendChild(deleteFavoriteBtn);
         favoriteContainer.appendChild(favoriteImg);

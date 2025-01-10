@@ -1,5 +1,5 @@
 
-export class Comic {
+export class Comic { 
     constructor(id, title, issueNumber, description, pageCount, thumbnail, price, creators, characters) {
       this.id = id,
       this.title = title,

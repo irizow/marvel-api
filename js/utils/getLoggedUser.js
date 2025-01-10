@@ -1,14 +1,18 @@
 import { User, Favorites } from "../clases.js"; //importamos clases necesarias
 
-
+if(!localStorage.getItem('loggedUser')) { //Si no hay ningun usuario logeado lo anunciamos
+    alert('Debes iniciar sesión para visualizar esta página');
+    window.location.href = 'index.html';
+}
 //Conseguimos los datos del usuario
 const loggedUserData = localStorage.getItem('loggedUser') ? JSON.parse(localStorage.getItem('loggedUser')) : '';
 
 
-if(!localStorage.getItem('userFavorites')) { //Si aún no hay favoritos en LS, hacemos set en LS de los favoritos 
-                                            // que el usuario tenía antes del log out
+if(!localStorage.getItem('userFavorites')) { //Si aún no hay favoritos en la sesión, hacemos set en LS de los favoritos 
+                                            // que el usuario tenía antes del log in
     localStorage.setItem('userFavorites', JSON.stringify(loggedUserData.favorites.comics));
 }
+
 
 export const loggedUser = new User( //Creamos una instancia de User con los datos del loggedUser
         loggedUserData.name,

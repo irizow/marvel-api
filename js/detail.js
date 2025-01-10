@@ -15,8 +15,8 @@ export function seeDetail() {
         comic.creators,
         comic.characters
         )
-        
-    const comicContainer = document.getElementById('detail-container');
+
+    const comicContainer = document.getElementById('detail-container'); //Creamos los elementos necesarios y los 'poblamos' con los datos del cómic.
 
     const detailImg = document.createElement('img');
     detailImg.src = comicDetail.getThumbnailURL();
@@ -30,13 +30,13 @@ export function seeDetail() {
     const detailDescription = document.createElement('p');
     detailDescription.textContent = comicDetail.description === '' || comicDetail.description === null ? 'No hay descripción disponible' : comicDetail.description;
     
-    descriptionWrapper.append(detailTitle, detailDescription);
+    descriptionWrapper.append(detailTitle, detailDescription); //Hacemos append
     secondColumn.append(descriptionWrapper);
     comicContainer.append(detailImg, secondColumn);
 
 }
 
-document.addEventListener('DOMContentLoaded', seeDetail)
+document.addEventListener('DOMContentLoaded', seeDetail) //Llamamos a la función cuando carga el DOM.
 
 
 

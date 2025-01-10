@@ -22,7 +22,7 @@ export function createComics(comics) {
         )
         comicsArr.push(comicObj);
     })
-    renderComics(comicsArr.slice(initialIndex, initialIndex + comicsPerPage));
+    renderComics(comicsArr.slice(initialIndex, initialIndex + comicsPerPage)); //Renderizamos los comics
 }
 
     
@@ -52,14 +52,13 @@ export function renderComics(comicsArr){
             addToFavorites.textContent = 'Añadir a Favoritos'
     
             addToFavorites.addEventListener('click', ()=> {
-                console.log('userfavs', loggedUser.favorites.comics)
                 if(loggedUser.favorites.comics.some((favorite) => favorite.id === comic.id)) {
-                    alert('Este comic ya está en favoritos!')
+                    alert('Este comic ya está en favoritos!') //Comprobamos si el comic al que hacemos ya está en favoritos
                 }
                 else {
-                    loggedUser.favorites.addFavorite(comic);
+                    loggedUser.favorites.addFavorite(comic); //Llamamos al método de clase para añadirlo
                     alert(`${comic.title} añadido a favoritos`)
-                    updateHeaderData()
+                    updateHeaderData() //actualizamos el numero de favoritos en la cabezera
                 }
             });
     
@@ -67,8 +66,8 @@ export function renderComics(comicsArr){
             viewDetails.textContent = 'Ver Detalles';
 
             viewDetails.addEventListener('click', ()=> {
-                localStorage.setItem('comicDetail', JSON.stringify(comic));
-                window.location.href = 'detail.html';
+                localStorage.setItem('comicDetail', JSON.stringify(comic)); //Añadimos el comic del que queremos ver el detalle en LS
+                window.location.href = 'detail.html'; //Redirigimos a details
             })
     
             comicContainer.appendChild(comicTitle); //Hacemos append de todos los elementos creados
