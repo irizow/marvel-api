@@ -50,7 +50,7 @@ export class Favorites {
         localStorage.setItem('userFavorites', JSON.stringify(this.comics)) //Guardamos los comics que estan en nuestros favoritos al localStorage
     }
   
-    copyFavorites() { //
+    copyFavorites() { // Hacer una copia de los favoritos creando una nueva instancia de la clase Favorites
       const copy = new Favorite(...this.comics)
       return copy;
     }
@@ -87,14 +87,14 @@ export class Favorites {
   }
  
  export class User {
-    constructor (name, surname, username, password, email, address, community, favorites) {
+    constructor (name, surname, username, password, email, address, city, favorites) {
         this.name = name,
         this.surname = surname,
         this.username = username,
         this.password = password,
         this.email = email,
         this.address = address,
-        this.community = community,
+        this.city = city,
         this.favorites = favorites;
     }
 

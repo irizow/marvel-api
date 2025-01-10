@@ -1,0 +1,22 @@
+
+[
+    {"id": 1, "name": "Seville", "postcode": "41001"},
+    {"id": 2, "name": "Zaragoza", "postcode": "50001"},
+    {"id": 3, "name": "Oviedo", "postcode": "33001"},
+    {"id": 4, "name": "Palma de Mallorca", "postcode": "07001"},
+    {"id": 5, "name": "Las Palmas de Gran Canaria", "postcode": "35001"},
+    {"id": 6, "name": "Santander", "postcode": "39001"},
+    {"id": 7, "name": "Valladolid", "postcode": "47001"},
+    {"id": 8, "name": "Toledo", "postcode": "45001"},
+    {"id": 9, "name": "Barcelona", "postcode": "08001"},
+    {"id": 10, "name": "Valencia", "postcode": "46001"},
+    {"id": 11, "name": "Mérida", "postcode": "06001"},
+    {"id": 12, "name": "Santiago de Compostela", "postcode": "15001"},
+    {"id": 13, "name": "Madrid", "postcode": "28001"},
+    {"id": 14, "name": "Murcia", "postcode": "30001"},
+    {"id": 15, "name": "Pamplona", "postcode": "31001"},
+    {"id": 16, "name": "Vitoria-Gasteiz", "postcode": "01001"},
+    {"id": 17, "name": "Logroño", "postcode": "26001"},
+    {"id": 18, "name": "Ceuta", "postcode": "51001"},
+    {"id": 19, "name": "Melilla", "postcode": "52001"}
+]

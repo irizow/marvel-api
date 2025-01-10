@@ -3,6 +3,58 @@ import { Favorites, User } from "./clases.js"; //Importar las clases usuario y f
 const registerForm = document.getElementById('register-form'); 
 registerForm.addEventListener('submit', validateForm);
 
+const cities =  async () => {
+    try {
+    const response = await fetch('../js/utils/datos.json');
+    if(!response.ok) {
+        return console.log('Error fetching cities', response.statusText)
+    }
+    const data = await response.json();
+    return data;
+    }
+    catch(err) {
+        console.log('error fetching cities')
+    }
+}
+
+const populateCities = async () => {
+    const selectInput = document.getElementById('city');
+    const postcodeInput = document.getElementById('postcode');
+    const citiesData = await cities();
+
+    if(citiesData) {
+        citiesData.forEach(city => {
+            const option = document.createElement('option');
+            option.value = city.name;
+            option.textContent = city.name
+            selectInput.appendChild(option);
+        })
+    }
+
+    selectInput.addEventListener('change', (e)=> {
+        const selectValue = e.target.value;
+        console.log(selectValue)
+
+        const selectedCity = citiesData.find(city => city.name === selectValue);
+        if(selectedCity) {
+            postcodeInput.value = selectedCity.postcode;
+        }
+    })
+
+    postcodeInput.addEventListener('input', (e)=> {
+        const postCodeValue = e.target.value;
+        const selectedCity = citiesData.find(city => city.postcode === postCodeValue);
+        if(selectedCity) {
+            selectInput.value = selectedCity.name
+        }
+    })
+
+}
+
+window.onload = () => {
+    populateCities();
+}
+
 const emailInput = document.getElementById('email');
 emailInput.addEventListener('keyup', (e)=> {
     if(e.key === '@') {
@@ -12,13 +64,14 @@ emailInput.addEventListener('keyup', (e)=> {
     }
 })
 
+
 function validateForm(e) {
     e.preventDefault(); //Evitar la submisión del formulario por defecto
 
     const name = document.getElementById('name').value; //Sacar todos los valores del formulario
     const surname = document.getElementById('surname').value;
     const address = document.getElementById('address').value;
-    const community = document.getElementById('community').value;
+    const city = document.getElementById('city').value;
     const email = document.getElementById('email').value;
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
@@ -52,7 +105,7 @@ function validateForm(e) {
         return
     }
 
-    const user = new User(name, surname, username, password, email, address, community, new Favorites()) //Si los datos están bien, crear un nuevo usuario
+    const user = new User(name, surname, username, password, email, address, city, new Favorites()) //Si los datos están bien, crear un nuevo usuario
     let existingUsers = JSON.parse(localStorage.getItem('users')) || []; //Sacamos usuarios existentes, si los hay, si no, inicializamos una array vacía
     const duplicateUserName = existingUsers.some((user) => user.username === username); //Chequeamos si existe un usuario con el nombre de usuario introducido.
     const duplicateEmail = existingUsers.some((user) => user.email === email); //Chequeamos si existe un usuario con el email introducido
@@ -76,6 +129,3 @@ function validateForm(e) {
     window.location.href = 'index.html' //Redirigimos al usuario para que haga el login
 }
 
-function getPoblacion(e) {
-
-}

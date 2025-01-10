@@ -3,9 +3,8 @@ import { updateHeaderData } from "./header.js";
 
 
 export function seeDetail() {
-    updateHeaderData();
-    const comic = JSON.parse(localStorage.getItem('comicDetail'));
-    const comicDetail = new Comic(
+    const comic = JSON.parse(localStorage.getItem('comicDetail')); //Sacamos el detalle que hemos guardado en LS al hacer click
+    const comicDetail = new Comic( //Creamos nueva instancia con los datos de LS
         comic.id,
         comic.title,
         comic.issueNumber,
@@ -16,7 +15,7 @@ export function seeDetail() {
         comic.creators,
         comic.characters
         )
-    console.log('accessing function detail')
+        
     const comicContainer = document.getElementById('detail-container');
 
     const detailImg = document.createElement('img');
